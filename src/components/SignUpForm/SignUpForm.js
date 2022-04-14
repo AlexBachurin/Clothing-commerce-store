@@ -3,6 +3,7 @@ import {
 	createAuthUserWithEmailAndPassword,
 	createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase";
+import FormInput from "../FormInput/FormInput";
 //group our inputs in 1 state
 const defaultFormFields = {
 	displayName: "",
@@ -24,6 +25,10 @@ const SignUpForm = () => {
 		setFormFields({ ...formFields, [name]: value });
 	};
 
+	const resetFormFields = () => {
+		setFormFields(defaultFormFields);
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		//if password does not match return from func
@@ -42,46 +47,49 @@ const SignUpForm = () => {
 				//pass name to function
 				const { displayName } = formFields;
 				createUserDocumentFromAuth(res.user, { displayName });
+				//reset form
+				resetFormFields();
 			}
 		} catch (error) {
-			console.log(error.message);
+			if (error.code === "auth/email-already-in-use") {
+				alert("email already in use");
+			} else {
+				console.log(error.message);
+			}
 		}
 	};
 	return (
 		<div>
 			<h2>Sign up with your email and password</h2>
 			<form onSubmit={handleSubmit}>
-				<label htmlFor="displayName">Display Name</label>
-				<input
-					onChange={handleChange}
+				<FormInput
+					label="Display Name"
 					value={formFields.displayName}
+					onChange={handleChange}
 					name="displayName"
 					type="text"
 					required
 				/>
-
-				<label htmlFor="email">Email</label>
-				<input
-					onChange={handleChange}
+				<FormInput
+					label="Email"
 					value={formFields.email}
+					onChange={handleChange}
 					name="email"
-					type="email"
+					type="text"
 					required
 				/>
-
-				<label htmlFor="password">Password</label>
-				<input
-					onChange={handleChange}
+				<FormInput
+					label="Password"
 					value={formFields.password}
+					onChange={handleChange}
 					name="password"
 					type="password"
 					required
 				/>
-
-				<label htmlFor="confirmPassword">Confirm Password</label>
-				<input
-					onChange={handleChange}
+				<FormInput
+					label="Confirm Password"
 					value={formFields.confirmPassword}
+					onChange={handleChange}
 					name="confirmPassword"
 					type="password"
 					required
