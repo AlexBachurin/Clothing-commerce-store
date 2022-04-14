@@ -1,7 +1,9 @@
 import React from "react";
+import SignInForm from "../../components/SignInForm/SignInForm";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import "./authentication.styles.scss";
 
-const SignIn = () => {
+const Authentication = () => {
 	//sign in with google redirect functionality
 	// useEffect(() => {
 	// 	const loginWithGoogleRedirect = async () => {
@@ -13,10 +15,11 @@ const SignIn = () => {
 	// 	loginWithGoogleRedirect();
 	// }, []);
 	return (
-		<div>
+		<div className="auth-container">
+			<SignInForm />
 			<SignUpForm />
 		</div>
 	);
 };
 
-export default SignIn;
+export default Authentication;

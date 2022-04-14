@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-	signInWithGooglePopup,
 	createAuthUserWithEmailAndPassword,
 	createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase";
@@ -63,10 +62,6 @@ const SignUpForm = () => {
 		}
 	};
 
-	const logGoogleUser = async () => {
-		const res = await signInWithGooglePopup();
-		const userDocRef = await createUserDocumentFromAuth(res.user);
-	};
 	return (
 		<div className="sign-up-container">
 			<h2>Don't Have An account?</h2>
@@ -85,7 +80,7 @@ const SignUpForm = () => {
 					value={formFields.email}
 					onChange={handleChange}
 					name="email"
-					type="text"
+					type="email"
 					required
 				/>
 				<FormInput
@@ -106,14 +101,7 @@ const SignUpForm = () => {
 				/>
 
 				<div className="form-buttons-container">
-					<Button type="submit">Sign In</Button>
-					<Button
-						style={{ lineHeight: "20px", padding: "5px 20px" }}
-						buttonType="google"
-						onClick={logGoogleUser}
-					>
-						sign in with google
-					</Button>
+					<Button type="submit">Sign Up</Button>
 				</div>
 			</form>
 		</div>
