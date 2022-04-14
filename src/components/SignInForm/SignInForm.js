@@ -24,8 +24,10 @@ const SignInForm = () => {
 			);
 			console.log(response);
 		} catch (error) {
-			if (error.code === "auth/user-not-found") {
-				alert("invalid login or email");
+			if (error.code === "auth/wrong-password") {
+				alert("incorret password");
+			} else if (error.code === "auth/user-not-found") {
+				alert("invalid email");
 			} else {
 				console.log("some error occured", error.message + error.code);
 			}
@@ -67,6 +69,7 @@ const SignInForm = () => {
 				<div className="form-buttons-container">
 					<Button type="submit">Sign In</Button>
 					<Button
+						type="button"
 						style={{ lineHeight: "20px", padding: "5px 20px" }}
 						buttonType="google"
 						onClick={logGoogleUser}
