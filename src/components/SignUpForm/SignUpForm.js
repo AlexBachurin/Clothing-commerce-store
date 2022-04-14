@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import {
+	signInWithGooglePopup,
 	createAuthUserWithEmailAndPassword,
 	createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase";
+import Button from "../Button/Button";
 import FormInput from "../FormInput/FormInput";
+import "./signUpForm.styles.scss";
+
 //group our inputs in 1 state
 const defaultFormFields = {
 	displayName: "",
@@ -58,9 +62,15 @@ const SignUpForm = () => {
 			}
 		}
 	};
+
+	const logGoogleUser = async () => {
+		const res = await signInWithGooglePopup();
+		const userDocRef = await createUserDocumentFromAuth(res.user);
+	};
 	return (
-		<div>
-			<h2>Sign up with your email and password</h2>
+		<div className="sign-up-container">
+			<h2>Don't Have An account?</h2>
+			<span>Sign up with your email and password</span>
 			<form onSubmit={handleSubmit}>
 				<FormInput
 					label="Display Name"
@@ -95,7 +105,16 @@ const SignUpForm = () => {
 					required
 				/>
 
-				<button type="submit">sign up</button>
+				<div className="form-buttons-container">
+					<Button type="submit">Sign In</Button>
+					<Button
+						style={{ lineHeight: "20px", padding: "5px 20px" }}
+						buttonType="google"
+						onClick={logGoogleUser}
+					>
+						sign in with google
+					</Button>
+				</div>
 			</form>
 		</div>
 	);
