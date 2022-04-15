@@ -1,0 +1,28 @@
+.checkout-container {
+    width: 600px;
+    margin: 0 auto;
+    .checkout-title {
+        display: flex;
+        justify-content: space-between;
+    }
+    .checkout-item {
+        display: flex;
+        // grid-template-columns: repeat(5, 1fr);
+        // justify-items: center;
+        // align-items: center;
+        justify-content: space-between;
+        align-items: center;
+        .checkout-toggle-amount {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            span {
+                cursor: pointer;
+            }
+        }
+        .remove {
+            cursor: pointer;
+        }
+    }
+}
