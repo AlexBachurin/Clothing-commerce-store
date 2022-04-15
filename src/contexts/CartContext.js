@@ -8,6 +8,7 @@ const initialState = {
 	amount: 0,
 	setAmount: () => {},
 	setCart: () => {},
+	total: 0,
 };
 
 const CartContext = React.createContext(initialState);
@@ -16,6 +17,7 @@ export const CartProvider = ({ children }) => {
 	const [isCartOpen, setIsCartOpen] = useState(false);
 	const [cart, setCart] = useState([]);
 	const [amount, setAmount] = useState(0);
+	const [total, setTotal] = useState(0);
 
 	//GET PRODUCTS
 	const { products } = useProductsContext();
@@ -89,13 +91,16 @@ export const CartProvider = ({ children }) => {
 		setCart(newCart);
 	};
 
-	//calculate amount every time cart state changes
+	//calculate amount and total every time cart state changes
 	useEffect(() => {
 		const calcAmount = cart.reduce((acc, cur) => {
 			return (acc += cur.quantity);
 		}, 0);
-
 		setAmount(calcAmount);
+		const calcTotal = cart.reduce((acc, cur) => {
+			return (acc += cur.quantity * cur.price);
+		}, 0);
+		setTotal(calcTotal);
 	}, [cart]);
 
 	return (
@@ -108,6 +113,7 @@ export const CartProvider = ({ children }) => {
 				amount,
 				toggleAmount,
 				deleteItemFromCart,
+				total,
 			}}
 		>
 			{children}

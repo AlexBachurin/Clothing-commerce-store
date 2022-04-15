@@ -31,4 +31,8 @@
             cursor: pointer;
         }
     }
+    .total {
+        display: flex;
+        justify-content: flex-end;
+    }
 }
