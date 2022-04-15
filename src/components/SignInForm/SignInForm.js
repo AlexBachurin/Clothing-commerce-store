@@ -7,7 +7,7 @@ import {
 	createUserDocumentFromAuth,
 	signInWithEmailAndPasswordAuth,
 } from "../../utils/firebase/firebase";
-import { useUserContext } from "../../contexts/UserContext";
+
 const defaultFormFields = {
 	email: "",
 	password: "",
@@ -16,17 +16,13 @@ const defaultFormFields = {
 const SignInForm = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 
-	const { setCurrentUser } = useUserContext();
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await signInWithEmailAndPasswordAuth(
+			await signInWithEmailAndPasswordAuth(
 				formFields.email,
 				formFields.password
 			);
-			//set user here
-			setCurrentUser(response.user);
 		} catch (error) {
 			if (error.code === "auth/wrong-password") {
 				alert("incorret password");
@@ -45,8 +41,7 @@ const SignInForm = () => {
 	};
 
 	const logGoogleUser = async () => {
-		const res = await signInWithGooglePopup();
-		await createUserDocumentFromAuth(res.user);
+		await signInWithGooglePopup();
 	};
 	return (
 		<div className="sign-in-container">
