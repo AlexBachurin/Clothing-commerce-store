@@ -81,6 +81,14 @@ export const CartProvider = ({ children }) => {
 		setCart(newCart);
 	};
 
+	//DELETE ITEM FROM Cart
+	const deleteItemFromCart = (id) => {
+		const newCart = cart.filter((item) => {
+			return item.id !== id;
+		});
+		setCart(newCart);
+	};
+
 	//calculate amount every time cart state changes
 	useEffect(() => {
 		const calcAmount = cart.reduce((acc, cur) => {
@@ -99,6 +107,7 @@ export const CartProvider = ({ children }) => {
 				cart,
 				amount,
 				toggleAmount,
+				deleteItemFromCart,
 			}}
 		>
 			{children}
