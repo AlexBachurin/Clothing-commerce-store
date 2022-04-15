@@ -1,7 +1,10 @@
 import React from "react";
+
+import { useCartContext } from "../../contexts/CartContext";
 import "./checkout.styles.scss";
 
 const Checkout = () => {
+	const { cart, toggleAmount } = useCartContext();
 	return (
 		<div className="checkout-container">
 			<div className="checkout-title">
@@ -12,17 +15,22 @@ const Checkout = () => {
 				<p>Remove</p>
 			</div>
 			<hr />
-			<div className="checkout-item">
-				<div>img</div>
-				<div>name</div>
-				<div className="checkout-toggle-amount">
-					<span>dec</span>
-					<p>amount</p>
-					<span>inc</span>
-				</div>
-				<div>price</div>
-				<div className="remove">x</div>
-			</div>
+			{cart.map((item) => {
+				const { id, imageUrl, name, quantity, price } = item;
+				return (
+					<div className="checkout-item">
+						<img src={imageUrl} alt={name} />
+						<div>{name}</div>
+						<div className="checkout-toggle-amount">
+							<span onClick={() => toggleAmount(id, "dec")}>dec</span>
+							<p>{quantity}</p>
+							<span onClick={() => toggleAmount(id, "inc")}>inc</span>
+						</div>
+						<div>{price}</div>
+						<div className="remove">x</div>
+					</div>
+				);
+			})}
 		</div>
 	);
 };

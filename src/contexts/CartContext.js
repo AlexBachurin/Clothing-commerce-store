@@ -5,9 +5,12 @@ const initialState = {
 	cart: [],
 	isCartOpen: false,
 	setIsCartOpen: () => {},
+	amount: 0,
+	setAmount: () => {},
+	setCart: () => {},
 };
 
-const CartContext = React.createContext();
+const CartContext = React.createContext(initialState);
 
 export const CartProvider = ({ children }) => {
 	const [isCartOpen, setIsCartOpen] = useState(false);
@@ -50,6 +53,34 @@ export const CartProvider = ({ children }) => {
 		}
 	};
 
+	//INCREASE/DECREASE, accept id of item and type of operation (inc, dec)
+	const toggleAmount = (id, type) => {
+		let newCart = [];
+		//check type of operation provided and do decrease or increase
+		if (type === "inc") {
+			newCart = cart.map((item) => {
+				if (item.id === id) {
+					return { ...item, quantity: item.quantity + 1 };
+				}
+				return item;
+			});
+		} else if (type === "dec") {
+			newCart = cart.map((item) => {
+				if (item.id === id) {
+					//check quantity so we dont go below zero
+					if (item.quantity === 1) {
+						return item;
+					} else {
+						return { ...item, quantity: item.quantity - 1 };
+					}
+				}
+				return item;
+			});
+		}
+
+		setCart(newCart);
+	};
+
 	//calculate amount every time cart state changes
 	useEffect(() => {
 		const calcAmount = cart.reduce((acc, cur) => {
@@ -67,6 +98,7 @@ export const CartProvider = ({ children }) => {
 				addToCart,
 				cart,
 				amount,
+				toggleAmount,
 			}}
 		>
 			{children}
