@@ -1,12 +1,15 @@
 import React from "react";
 import "./cartItem.styles.scss";
-const CartItem = ({ id, name, imageUrl, quantity, price }) => {
+const CartItem = ({ name, imageUrl, quantity, price }) => {
 	return (
-		<div style={{ display: "flex", flexDirection: "column" }}>
-			<h2>{name}</h2>
-			{/* <span>{imageUrl}</span> */}
-			<span>{quantity}</span>
-			<span>{price}</span>
+		<div className="cart-item-container">
+			<img src={imageUrl} alt={name} />
+			<div className="item-details">
+				<span className="name">{name}</span>
+				<span className="price">
+					{quantity} x ${price}
+				</span>
+			</div>
 		</div>
 	);
 };

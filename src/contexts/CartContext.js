@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useProductsContext } from "./ProductsContext";
 
 const initialState = {
@@ -12,6 +12,7 @@ const CartContext = React.createContext();
 export const CartProvider = ({ children }) => {
 	const [isCartOpen, setIsCartOpen] = useState(false);
 	const [cart, setCart] = useState([]);
+	const [amount, setAmount] = useState(0);
 
 	//GET PRODUCTS
 	const { products } = useProductsContext();
@@ -49,6 +50,15 @@ export const CartProvider = ({ children }) => {
 		}
 	};
 
+	//calculate amount every time cart state changes
+	useEffect(() => {
+		const calcAmount = cart.reduce((acc, cur) => {
+			return (acc += cur.quantity);
+		}, 0);
+
+		setAmount(calcAmount);
+	}, [cart]);
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -56,6 +66,7 @@ export const CartProvider = ({ children }) => {
 				openCart,
 				addToCart,
 				cart,
+				amount,
 			}}
 		>
 			{children}
