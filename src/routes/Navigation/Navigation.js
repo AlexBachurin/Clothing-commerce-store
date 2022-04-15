@@ -6,8 +6,10 @@ import "./Navigation.styles.scss";
 import { signOutUser } from "../../utils/firebase/firebase";
 import CartIcon from "../../components/CartIcon/CartIcon";
 import CartDropDown from "../../components/CartDropDown/CartDropDown";
+import { useCartContext } from "../../contexts/CartContext";
 const Navigation = () => {
 	const { currentUser } = useUserContext();
+	const { isCartOpen } = useCartContext();
 
 	const signOut = async () => {
 		await signOutUser();
@@ -33,7 +35,7 @@ const Navigation = () => {
 					)}
 					<CartIcon />
 				</nav>
-				<CartDropDown />
+				{isCartOpen ? <CartDropDown /> : null}
 			</div>
 			<Outlet />
 		</>
