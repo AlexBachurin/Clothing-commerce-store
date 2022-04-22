@@ -57,9 +57,8 @@ export const CartProvider = ({ children }) => {
 
 	//INCREASE/DECREASE, accept id of item and type of operation (inc, dec)
 	const toggleAmount = (id, type) => {
-		let newCart = [];
 		//check type of operation provided and do decrease or increase
-		newCart = cart
+		let newCart = cart
 			.map((item) => {
 				if (item.id === id) {
 					if (type === "inc") {

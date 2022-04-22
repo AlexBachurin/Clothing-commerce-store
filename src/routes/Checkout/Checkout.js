@@ -1,37 +1,23 @@
 import React from "react";
+import CheckoutItem from "../../components/CheckoutItem/CheckoutItem";
 
 import { useCartContext } from "../../contexts/CartContext";
 import "./checkout.styles.scss";
 
 const Checkout = () => {
-	const { cart, toggleAmount, deleteItemFromCart, total } = useCartContext();
+	const { cart, total } = useCartContext();
 	return (
 		<div className="checkout-container">
-			<div className="checkout-title">
-				<p>Product</p>
-				<p>Description</p>
-				<p>Quantity</p>
-				<p>Price</p>
-				<p>Remove</p>
+			<div className="checkout-header">
+				<div className="title">Product</div>
+				<div className="title">Description</div>
+				<div className="title">Quantity</div>
+				<div className="title">Price</div>
+				<div className="title">Remove</div>
 			</div>
 			<hr />
 			{cart.map((item) => {
-				const { id, imageUrl, name, quantity, price } = item;
-				return (
-					<div className="checkout-item">
-						<img src={imageUrl} alt={name} />
-						<div>{name}</div>
-						<div className="checkout-toggle-amount">
-							<span onClick={() => toggleAmount(id, "dec")}>dec</span>
-							<p>{quantity}</p>
-							<span onClick={() => toggleAmount(id, "inc")}>inc</span>
-						</div>
-						<div>{price}</div>
-						<div onClick={() => deleteItemFromCart(id)} className="remove">
-							x
-						</div>
-					</div>
-				);
+				return <CheckoutItem key={item.id} {...item} />;
 			})}
 			<hr />
 			<div className="total">
