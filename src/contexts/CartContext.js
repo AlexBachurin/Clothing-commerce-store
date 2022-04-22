@@ -59,27 +59,22 @@ export const CartProvider = ({ children }) => {
 	const toggleAmount = (id, type) => {
 		let newCart = [];
 		//check type of operation provided and do decrease or increase
-		if (type === "inc") {
-			newCart = cart.map((item) => {
+		newCart = cart
+			.map((item) => {
 				if (item.id === id) {
-					return { ...item, quantity: item.quantity + 1 };
-				}
-				return item;
-			});
-		} else if (type === "dec") {
-			newCart = cart.map((item) => {
-				if (item.id === id) {
-					//check quantity so we dont go below zero
-					if (item.quantity === 1) {
-						return item;
-					} else {
+					if (type === "inc") {
+						return { ...item, quantity: item.quantity + 1 };
+					}
+					if (type === "dec") {
 						return { ...item, quantity: item.quantity - 1 };
 					}
 				}
 				return item;
+			})
+			//filter to delete items with quantity of 0
+			.filter((item) => {
+				return item.quantity !== 0;
 			});
-		}
-
 		setCart(newCart);
 	};
 
